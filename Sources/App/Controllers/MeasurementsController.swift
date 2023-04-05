@@ -7,10 +7,13 @@ struct MeasurementController: RouteCollection {
 
         route.get(use: list)
         route.post(":co2Kg", use: create)
+        route.post(use: createWithDto)
     }
 
-    func list(req: Request) async throws -> [String] {
-        return try await req.application.measurementRepository.list().map { $0.description }
+    func list(req: Request) async throws -> [CarbonMeasurementDto] {
+        return try await req.application.measurementRepository.list().map {
+            CarbonMeasurementDto(from: $0)
+        }
     }
 
     func create(req: Request) async throws -> HTTPStatus {
@@ -19,5 +22,26 @@ struct MeasurementController: RouteCollection {
             measurement: CarbonMeasurement(carbonKg: kg)
         )
         return HTTPStatus.created
+    }
+
+    func createWithDto(req: Request) async throws -> HTTPStatus {
+        let dto = try req.content.decode(CarbonMeasurementDto.self)
+        try await req.application.measurementRepository.create(measurement: dto.asMeasurement)
+        return HTTPStatus.created
+    }
+}
+struct CarbonMeasurementDto: Content {
+
+    init(from measurement: CarbonMeasurement) {
+        self.co2Kg = measurement.carbonKg
+        self.timestamp = measurement.date
+    }
+
+    var co2Kg: Double
+    var timestamp: Date
+    var stringDescription: String?
+
+    var asMeasurement: CarbonMeasurement {
+        CarbonMeasurement(kg: self.co2Kg, at: self.timestamp)
     }
 }
