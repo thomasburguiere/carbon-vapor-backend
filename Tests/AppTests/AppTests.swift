@@ -1,10 +1,15 @@
 @testable import App
 import XCTVapor
+import MongoDBVapor
 
 final class AppTests: XCTestCase {
     func testHelloWorld() throws {
         let app = Application(.testing)
-        defer { app.shutdown() }
+        defer { 
+          app.mongoDB.cleanup()
+          cleanupMongoSwift()
+          app.shutdown() 
+        }
         try configure(app)
 
         try app.test(.GET, "hello", afterResponse: { res in

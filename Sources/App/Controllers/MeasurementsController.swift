@@ -3,7 +3,7 @@ import CarbonLogLib
 
 struct MeasurementController: RouteCollection {
     func boot(routes: Vapor.RoutesBuilder) throws {
-       let route = routes.grouped("measurements") 
+       let route: RoutesBuilder = routes.grouped("measurements") 
 
        route.get(use: list)
        route.post(":co2Kg", use: create)
