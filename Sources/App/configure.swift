@@ -1,5 +1,5 @@
-import Vapor
 import MongoDBVapor
+import Vapor
 
 // configures your application
 public func configure(_ app: Application) throws {
@@ -13,11 +13,11 @@ public func configure(_ app: Application) throws {
     try app.mongoDB.configure("mongodb://localhost:27017")
 }
 
-extension Application { 
+extension Application {
 
-  var measurementRepository: MeasurementRepository { 
-    let collection = self.mongoDB.client.db("carbon_measurements")
-    .collection("Measurements")
-    return MeasurementRepository(collection: collection)
-  }
+    var measurementRepository: MeasurementRepository {
+        let collection = self.mongoDB.client.db("carbon_measurements")
+            .collection("Measurements")
+        return MeasurementRepository(collection: collection)
+    }
 }

@@ -4,13 +4,13 @@ import PackageDescription
 let package = Package(
     name: "carbon-logger-backend",
     platforms: [
-       .macOS(.v12)
+        .macOS(.v12)
     ],
     dependencies: [
         // 💧 A server-side Swift web framework.
         .package(url: "https://github.com/vapor/vapor.git", from: "4.0.0"),
         .package(url: "https://github.com/mongodb/mongodb-vapor", .upToNextMajor(from: "1.1.0")),
-        .package(url: "https://github.com/thomasburguiere/carbonlog-swift-lib", branch: "develop")
+        .package(url: "https://github.com/thomasburguiere/carbonlog-swift-lib", branch: "develop"),
     ],
     targets: [
         .target(
@@ -18,7 +18,7 @@ let package = Package(
             dependencies: [
                 .product(name: "Vapor", package: "vapor"),
                 .product(name: "MongoDBVapor", package: "mongodb-vapor"),
-                .product(name: "CarbonLogLib", package: "carbonlog-swift-lib")
+                .product(name: "CarbonLogLib", package: "carbonlog-swift-lib"),
             ],
             swiftSettings: [
                 // Enable better optimizations when building in Release configuration. Despite the use of
@@ -28,15 +28,20 @@ let package = Package(
             ]
         ),
         .executableTarget(
-          name: "Run", dependencies: [
-            .target(name: "App"),
+            name: "Run",
+            dependencies: [
+                .target(name: "App"),
                 .product(name: "MongoDBVapor", package: "mongodb-vapor"),
-                .product(name: "CarbonLogLib", package: "carbonlog-swift-lib")
-          ]),
-        .testTarget(name: "AppTests", dependencies: [
-            .target(name: "App"),
-            .product(name: "XCTVapor", package: "vapor"),
-            .product(name: "CarbonLogLib", package: "carbonlog-swift-lib")
-        ])
+                .product(name: "CarbonLogLib", package: "carbonlog-swift-lib"),
+            ]
+        ),
+        .testTarget(
+            name: "AppTests",
+            dependencies: [
+                .target(name: "App"),
+                .product(name: "XCTVapor", package: "vapor"),
+                .product(name: "CarbonLogLib", package: "carbonlog-swift-lib"),
+            ]
+        ),
     ]
 )
