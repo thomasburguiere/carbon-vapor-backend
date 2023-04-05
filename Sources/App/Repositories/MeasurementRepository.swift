@@ -10,7 +10,7 @@ struct MeasurementRepository {
     var collection: MongoCollection<BSONDocument>
 
     func list() async throws -> Array<CarbonMeasurement> {
-      return try await self.collection.find().toArray().map{ $0.map() }
+      return try await self.collection.find().toArray().map{ $0.toMeasurement() }
     }
 
     func create(measurement: CarbonMeasurement) async throws {
@@ -19,7 +19,7 @@ struct MeasurementRepository {
 }
 
 fileprivate extension BSONDocument {
-  func map() -> CarbonMeasurement {
+  func toMeasurement() -> CarbonMeasurement {
     return CarbonMeasurement(
       kg: self["co2Kg"]!.doubleValue!,
       at: self["timestamp"]!.dateValue!

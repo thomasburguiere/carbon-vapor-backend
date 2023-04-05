@@ -2,4 +2,4 @@
 GET http://localhost:8080/measurements
 
 ###
-POST http://localhost:8080/measurements/23.0
+POST http://localhost:8080/measurements/42.0

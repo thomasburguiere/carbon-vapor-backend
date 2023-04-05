@@ -18,6 +18,11 @@ x-shared_environment: &shared_environment
   LOG_LEVEL: ${LOG_LEVEL:-debug}
   
 services:
+  carbon-measurements-db:
+      container_name: carbonlog-db-mongo
+      image: mongo
+      ports:
+        - 27017:27017
   app:
     image: carbon-logger-backend:latest
     build:
