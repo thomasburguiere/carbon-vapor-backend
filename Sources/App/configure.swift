@@ -10,7 +10,7 @@ public func configure(_ app: Application) throws {
     try routes(app)
 
     // Configure the app for using a MongoDB server at the provided connection string.
-    try app.mongoDB.configure("mongodb://localhost:27017")
+    try app.mongoDB.configure(Environment.get("MONGO_URL")!)
 }
 
 extension Application {
