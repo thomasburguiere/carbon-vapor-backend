@@ -9,12 +9,14 @@ let package = Package(
     dependencies: [
         // 💧 A server-side Swift web framework.
         .package(url: "https://github.com/vapor/vapor.git", from: "4.0.0"),
+        .package(url: "https://github.com/thomasburguiere/carbonlog-swift-lib", branch: "develop")
     ],
     targets: [
         .target(
             name: "App",
             dependencies: [
-                .product(name: "Vapor", package: "vapor")
+                .product(name: "Vapor", package: "vapor"),
+                .product(name: "CarbonLogLib", package: "carbonlog-swift-lib")
             ],
             swiftSettings: [
                 // Enable better optimizations when building in Release configuration. Despite the use of
@@ -23,10 +25,15 @@ let package = Package(
                 .unsafeFlags(["-cross-module-optimization"], .when(configuration: .release))
             ]
         ),
-        .executableTarget(name: "Run", dependencies: [.target(name: "App")]),
+        .executableTarget(
+          name: "Run", dependencies: [
+            .target(name: "App"),
+                .product(name: "CarbonLogLib", package: "carbonlog-swift-lib")
+          ]),
         .testTarget(name: "AppTests", dependencies: [
             .target(name: "App"),
             .product(name: "XCTVapor", package: "vapor"),
+            .product(name: "CarbonLogLib", package: "carbonlog-swift-lib")
         ])
     ]
 )

@@ -1,0 +1,28 @@
+{
+  "configurations": [
+    {
+      "type": "lldb",
+      "request": "launch",
+      "sourceLanguages": [
+        "swift"
+      ],
+      "name": "Debug Run",
+      "program": "${workspaceFolder:carbon-logger-backend}/.build/debug/Run",
+      "args": [],
+      "cwd": "${workspaceFolder:carbon-logger-backend}",
+      "preLaunchTask": "swift: Build Debug Run"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "sourceLanguages": [
+        "swift"
+      ],
+      "name": "Release Run",
+      "program": "${workspaceFolder:carbon-logger-backend}/.build/release/Run",
+      "args": [],
+      "cwd": "${workspaceFolder:carbon-logger-backend}",
+      "preLaunchTask": "swift: Build Release Run"
+    }
+  ]
+}
