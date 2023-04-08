@@ -1,0 +1,29 @@
+# 1
+version: '3'
+
+# 2
+services:
+  til-app-tests:
+    # 3
+    depends_on:
+      - mongo_test
+    # 4
+    build:
+      context: .
+      dockerfile: testing.Dockerfile
+    # 5
+    environment:
+      - MONGO_URL="mongodb://host.docker.internal:27017"
+      - DATABASE_HOST=mongo_test
+      - DATABASE_PORT=28018
+      - DATABASE_NAME=vapor_test
+  # 6
+  mongo_test:
+    image: mongo
+    ports:
+      - 28018:27017
+    # 7
+    # environment:
+      # - POSTGRES_DB=vapor_test
+      # - POSTGRES_USER=vapor_username
+      # - POSTGRES_PASSWORD=vapor_password
