@@ -8,7 +8,7 @@ let package = Package(
     ],
     dependencies: [
         // 💧 A server-side Swift web framework.
-        .package(url: "https://github.com/vapor/vapor.git", from: "4.75.1"),
+        .package(url: "https://github.com/vapor/vapor.git", from: "4.76.0"),
         .package(url: "https://github.com/mongodb/mongodb-vapor", .upToNextMajor(from: "1.1.0")),
         .package(url: "https://github.com/thomasburguiere/carbonlog-swift-lib", branch: "develop"),
     ],
