@@ -1,4 +1,4 @@
-import MongoDBVapor
+import MongoKitten
 import Vapor
 
 // configures your application
@@ -10,14 +10,30 @@ public func configure(_ app: Application) throws {
     try routes(app)
 
     // Configure the app for using a MongoDB server at the provided connection string.
-    try app.mongoDB.configure(Environment.get("MONGO_URL")!)
+    try app.initializeMongoDB(connectionString: "\(Environment.get("MONGO_URL")!)/carbon_measurements")
+}
+
+private struct MongoDBStorageKey: StorageKey {
+    typealias Value = MongoDatabase
 }
 
 extension Application {
+    public var mongoDB: MongoDatabase {
+        get {
+            storage[MongoDBStorageKey.self]!
+        }
+        set {
+            storage[MongoDBStorageKey.self] = newValue
+        }
+    }
+
+    public func initializeMongoDB(connectionString: String) throws {
+        self.mongoDB = try MongoDatabase.lazyConnect(to: connectionString)
+    }
+
 
     var measurementRepository: MeasurementRepository {
-        let collection = self.mongoDB.client.db("carbon_measurements")
-            .collection("Measurements")
+        let collection: MongoCollection = self.mongoDB["Measurements"]
         return MeasurementRepository(collection: collection)
     }
 }

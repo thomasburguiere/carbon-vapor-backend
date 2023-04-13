@@ -1,5 +1,5 @@
 import CarbonLogLib
-import MongoDBVapor
+import MongoKitten
 import Vapor
 
 struct MeasurementRepositoryKey: StorageKey {
@@ -7,29 +7,29 @@ struct MeasurementRepositoryKey: StorageKey {
 }
 
 struct MeasurementRepository {
-    var collection: MongoCollection<BSONDocument>
+    var collection: MongoCollection
 
     func list() async throws -> [CarbonMeasurement] {
-        return try await self.collection.find().toArray().map(toMeasurement)
+        return try await self.collection.find().map(transform: toMeasurement).drain()
     }
 
     func create(measurement: CarbonMeasurement) async throws {
-        try await self.collection.insertOne(measurement.toBson())
+        try await self.collection.insert(measurement.toDocument())
     }
 }
 
-private func toMeasurement(doc: BSONDocument) -> CarbonMeasurement {
+private func toMeasurement(doc: Document) -> CarbonMeasurement {
     return CarbonMeasurement(
-        kg: doc["co2Kg"]!.doubleValue!,
-        at: doc["timestamp"]!.dateValue!
+        kg: doc["co2Kg"] as! Double,
+        at: doc["timestamp"] as! Date
     )
 }
 
 extension CarbonMeasurement {
-    fileprivate func toBson() -> BSONDocument {
-        var doc = BSONDocument()
-        doc["co2Kg"] = BSON.double(self.carbonKg)
-        doc["timestamp"] = BSON.datetime(self.date)
+    fileprivate func toDocument() -> Document {
+        var doc = Document()
+        doc["co2Kg"] = self.carbonKg
+        doc["timestamp"] = self.date
         return doc
     }
 }

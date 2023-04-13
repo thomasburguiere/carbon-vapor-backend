@@ -9,7 +9,7 @@ let package = Package(
     dependencies: [
         // 💧 A server-side Swift web framework.
         .package(url: "https://github.com/vapor/vapor.git", from: "4.76.0"),
-        .package(url: "https://github.com/mongodb/mongodb-vapor", .upToNextMajor(from: "1.1.0")),
+        .package(url: "https://github.com/orlandos-nl/MongoKitten.git", from: "7.2.0"),
         .package(url: "https://github.com/thomasburguiere/carbonlog-swift-lib", branch: "develop"),
     ],
     targets: [
@@ -17,7 +17,7 @@ let package = Package(
             name: "App",
             dependencies: [
                 .product(name: "Vapor", package: "vapor"),
-                .product(name: "MongoDBVapor", package: "mongodb-vapor"),
+                .product(name: "MongoKitten", package: "MongoKitten"),
                 .product(name: "CarbonLogLib", package: "carbonlog-swift-lib"),
             ],
             swiftSettings: [
@@ -31,7 +31,7 @@ let package = Package(
             name: "Run",
             dependencies: [
                 .target(name: "App"),
-                .product(name: "MongoDBVapor", package: "mongodb-vapor"),
+                .product(name: "MongoKitten", package: "MongoKitten"),
                 .product(name: "CarbonLogLib", package: "carbonlog-swift-lib"),
             ]
         ),
