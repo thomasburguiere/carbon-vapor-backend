@@ -1,11 +1,15 @@
 ###
 GET http://localhost:8080/measurements
+# Authorization: Basic user secret
+# Authorization: Bearer foo
 
 ###
 POST http://localhost:8080/measurements/42.0
+Authorization: Bearer foo
 
 ###
 POST http://localhost:8080/measurements/
+Authorization: Bearer foo
 Content-Type: application/json
 
 {

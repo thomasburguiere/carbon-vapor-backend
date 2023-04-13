@@ -4,6 +4,9 @@ import Vapor
 struct MeasurementController: RouteCollection {
     func boot(routes: Vapor.RoutesBuilder) throws {
         let route: RoutesBuilder = routes.grouped("measurements")
+            .grouped(BasicAuthenticator())
+            .grouped(BearerAuthenticator())
+            .grouped(User.guardMiddleware())
 
         route.get(use: list)
         route.post(":co2Kg", use: create)
