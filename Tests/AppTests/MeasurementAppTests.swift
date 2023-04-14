@@ -4,12 +4,13 @@ import XCTVapor
 @testable import App
 
 final class MeasurementAppTests: XCTestCase {
-    let url = Environment.get("MONGO_TEST_URL") ?? "mongodb://localhost:28018"
+    let dbUrl =
+        Environment.get("MONGO_TEST_URL") ?? "mongodb://localhost:28018" + "/carbon_measurements"
     var db: MongoDatabase?
     var collection: MongoCollection?
 
     override func setUp() async throws {
-        self.db = try await MongoDatabase.connect(to: "\(url)/carbon_measurements")
+        self.db = try await MongoDatabase.connect(to: self.dbUrl)
         self.collection = self.db!["Measurements"]
     }
 
@@ -23,8 +24,7 @@ final class MeasurementAppTests: XCTestCase {
             app.shutdown()
         }
         try configure(app)
-        let url = Environment.get("MONGO_TEST_URL") ?? "mongodb://localhost:28018"
-        try app.initializeMongoDB(connectionString: "\(url)/carbon_measurements")
+        try app.initializeMongoDB(connectionString: self.dbUrl)
 
         try app.test(
             .GET,
@@ -42,8 +42,7 @@ final class MeasurementAppTests: XCTestCase {
             app.shutdown()
         }
         try configure(app)
-        let url = Environment.get("MONGO_TEST_URL") ?? "mongodb://localhost:28018"
-        try app.initializeMongoDB(connectionString: "\(url)/carbon_measurements")
+        try app.initializeMongoDB(connectionString: self.dbUrl)
 
         try app.test(
             .POST,

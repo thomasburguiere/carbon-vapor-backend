@@ -31,9 +31,15 @@ extension Application {
         self.mongoDB = try MongoDatabase.lazyConnect(to: connectionString)
     }
 
-
     var measurementRepository: MeasurementRepository {
-        let collection: MongoCollection = self.mongoDB["Measurements"]
-        return MeasurementRepository(collection: collection)
+        if let repo: MeasurementRepository = storage[MeasurementRepositoryKey.self] {
+            return repo
+        } else {
+            let collection: MongoCollection = self.mongoDB["Measurements"]
+            let repo = MeasurementRepository(collection: collection)
+            storage[MeasurementRepositoryKey.self] = repo
+            return repo
+        }
+
     }
 }
