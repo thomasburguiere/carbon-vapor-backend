@@ -3,6 +3,17 @@ import XCTVapor
 
 @testable import App
 
+let testBearer = "my-test-bearer"
+let authHeader : HTTPHeaders = ["Authorization": "Bearer \(testBearer)"]
+
+private func configureTestApp() throws -> Application {
+    let app = Application(.testing)
+
+    app.middleware.use(try TestBearerAuthenticator(env: app.environment, testBearer: testBearer))
+    try configure(app)
+    return app
+}
+
 final class MeasurementAppTests: XCTestCase {
     static var db: MongoDatabase?
     var collection: MongoCollection?
@@ -24,16 +35,29 @@ final class MeasurementAppTests: XCTestCase {
         try await self.collection!.deleteAll(where: Document())
     }
 
-    func testListEmptyMeasurements() throws {
-        let app = Application(.testing)
+    func testFailListMeasurementWithoutAuth() throws {
+      let app = try configureTestApp()
         defer {
             app.shutdown()
         }
-        try configure(app)
-
         try app.test(
             .GET,
             "measurements",
+            afterResponse: { res in
+                XCTAssertEqual(res.status, .unauthorized)
+            }
+        )
+    }
+
+    func testListEmptyMeasurements() throws {
+        let app = try configureTestApp()
+        defer {
+            app.shutdown()
+        }
+        try app.test(
+            .GET,
+            "measurements",
+            headers: authHeader,
             afterResponse: { res in
                 XCTAssertEqual(res.status, .ok)
                 XCTAssertEqual(res.body.string, "[]")
@@ -42,15 +66,14 @@ final class MeasurementAppTests: XCTestCase {
     }
 
     func testCreateMeasurement() throws {
-        let app = Application(.testing)
+        let app = try configureTestApp()
         defer {
             app.shutdown()
         }
-        try configure(app)
-
         try app.test(
             .POST,
             "measurements/42.0",
+            headers: authHeader,
             afterResponse: { res in
                 XCTAssertEqual(res.status, .created)
             }
@@ -59,6 +82,7 @@ final class MeasurementAppTests: XCTestCase {
         try app.test(
             .GET,
             "measurements",
+            headers: authHeader,
             afterResponse: { res in
                 XCTAssertEqual(res.status, .ok)
                 let expectedContent = "[{\"co2Kg\":42,\"timestamp\":"

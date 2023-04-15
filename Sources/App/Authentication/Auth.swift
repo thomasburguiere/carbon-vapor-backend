@@ -1,7 +1,10 @@
 import Vapor
 
-struct User: Authenticatable {
+public struct User: Authenticatable {
     var name: String
+    public init(name: String) {
+        self.name = name
+    }
 }
 
 struct BasicAuthenticator: AsyncBasicAuthenticator {
