@@ -4,14 +4,20 @@ import XCTVapor
 @testable import App
 
 final class MeasurementAppTests: XCTestCase {
-    let dbUrl =
-        Environment.get("MONGO_TEST_URL") ?? "mongodb://localhost:28018" + "/carbon_measurements"
-    var db: MongoDatabase?
+    static var db: MongoDatabase?
     var collection: MongoCollection?
 
+    override class func setUp() {
+        setupTestMongoEnvironmentVariable()
+        let dbUrl =
+            "\(Environment.get("MONGO_URL")!)/carbon_measurements"
+        do { MeasurementAppTests.db = try MongoDatabase.lazyConnect(to: dbUrl) } catch {
+            print("Unexpected error: \(error).")
+        }
+    }
+
     override func setUp() async throws {
-        self.db = try await MongoDatabase.connect(to: self.dbUrl)
-        self.collection = self.db!["Measurements"]
+        self.collection = MeasurementAppTests.db!["Measurements"]
     }
 
     override func tearDown() async throws {
@@ -24,7 +30,6 @@ final class MeasurementAppTests: XCTestCase {
             app.shutdown()
         }
         try configure(app)
-        try app.initializeMongoDB(connectionString: self.dbUrl)
 
         try app.test(
             .GET,
@@ -42,7 +47,6 @@ final class MeasurementAppTests: XCTestCase {
             app.shutdown()
         }
         try configure(app)
-        try app.initializeMongoDB(connectionString: self.dbUrl)
 
         try app.test(
             .POST,

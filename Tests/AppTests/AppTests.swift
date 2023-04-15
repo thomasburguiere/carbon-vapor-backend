@@ -4,6 +4,11 @@ import XCTVapor
 @testable import App
 
 final class AppTests: XCTestCase {
+
+    class override func setUp() {
+        setupTestMongoEnvironmentVariable()
+    }
+
     func testHelloWorld() throws {
         let app = Application(Environment.testing)
         defer {
