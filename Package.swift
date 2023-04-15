@@ -9,7 +9,7 @@ let package = Package(
     dependencies: [
         // 💧 A server-side Swift web framework.
         .package(url: "https://github.com/vapor/vapor.git", from: "4.76.0"),
-        .package(url: "https://github.com/orlandos-nl/MongoKitten.git", from: "7.2.0"),
+        .package(url: "https://github.com/orlandos-nl/MongoKitten.git", from: "7.6.4"),
         .package(url: "https://github.com/thomasburguiere/carbonlog-swift-lib", branch: "develop"),
     ],
     targets: [
