@@ -7,9 +7,9 @@
         "swift"
       ],
       "name": "Debug Run",
-      "program": "${workspaceFolder:carbon-logger-backend}/.build/debug/Run",
+      "program": "${workspaceFolder:carbon-vapor-backend}/.build/debug/Run",
       "args": [],
-      "cwd": "${workspaceFolder:carbon-logger-backend}",
+      "cwd": "${workspaceFolder:carbon-vapor-backend}",
       "preLaunchTask": "swift: Build Debug Run"
     },
     {
@@ -19,9 +19,9 @@
         "swift"
       ],
       "name": "Release Run",
-      "program": "${workspaceFolder:carbon-logger-backend}/.build/release/Run",
+      "program": "${workspaceFolder:carbon-vapor-backend}/.build/release/Run",
       "args": [],
-      "cwd": "${workspaceFolder:carbon-logger-backend}",
+      "cwd": "${workspaceFolder:carbon-vapor-backend}",
       "preLaunchTask": "swift: Build Release Run"
     }
   ]

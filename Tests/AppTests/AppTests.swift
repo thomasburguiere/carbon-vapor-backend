@@ -1,14 +1,17 @@
-import MongoDBVapor
+import MongoKitten
 import XCTVapor
 
 @testable import App
 
 final class AppTests: XCTestCase {
+
+    class override func setUp() {
+        setupTestMongoEnvironmentVariable()
+    }
+
     func testHelloWorld() throws {
-        let app = Application(.testing)
+        let app = Application(Environment.testing)
         defer {
-            app.mongoDB.cleanup()
-            cleanupMongoSwift()
             app.shutdown()
         }
         try configure(app)
