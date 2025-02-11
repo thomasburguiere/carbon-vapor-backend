@@ -1,5 +1,5 @@
 import CarbonLogLib
-import MongoKitten
+@preconcurrency import MongoKitten
 import Vapor
 
 struct MeasurementRepositoryKey: StorageKey {
