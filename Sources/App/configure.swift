@@ -1,4 +1,4 @@
-import MongoKitten
+@preconcurrency import MongoKitten
 import Vapor
 
 // configures your application
@@ -10,7 +10,8 @@ public func configure(_ app: Application) throws {
     try routes(app)
 
     // Configure the app for using a MongoDB server at the provided connection string.
-    try app.initializeMongoDB(connectionString: "\(Environment.get("MONGO_URL")!)/carbon_measurements")
+    let mongoUrl = Environment.get("MONGO_URL") ?? "mongodb://host.docker.internal:27017"
+    try app.initializeMongoDB(connectionString: "\(mongoUrl)/carbon_measurements")
 }
 
 private struct MongoDBStorageKey: StorageKey {
