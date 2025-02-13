@@ -1,0 +1,37 @@
+{
+  "recommendations": [
+    "swiftlang.swift-vscode",
+    "vknabel.vscode-apple-swift-format",
+    "ms-azuretools.vscode-docker",
+    "vadimcn.vscode-lldb",
+    "github.vscode-github-actions",
+    "github.vscode-pull-request-github",
+    "anweber.vscode-httpyac",
+    "soulcode.vscode-unwanted-extensions"
+  ],
+  "unwantedRecommendations": [
+    "alexkrechik.cucumberautocomplete",
+    "angular.ng-template",
+    "antfu.vite",
+    "bradlc.vscode-tailwindcss",
+    "christian-kohler.npm-intellisense",
+    "cucumberopen.cucumber-official",
+    "dbaeumer.vscode-eslint",
+    "gitlab.gitlab-workflow",
+    "golang.go",
+    "harryhopkinson.vs-code-runner",
+    "james-yu.latex-workshop",
+    "ms-playwright.playwright",
+    "ms-vscode-remote.remote-containers",
+    "nuxtr.nuxt-vscode-extentions",
+    "nuxtr.nuxtr-vscode",
+    "reditorsupport.r",
+    "rust-lang.rust-analyzer",
+    "tauri-apps.tauri-vscode",
+    "vitest.explorer",
+    "vscjava.vscode-gradle",
+    "vscjava.vscode-java-debug",
+    "vue.volar",
+    "yoavbls.pretty-ts-errors"
+  ]
+}
