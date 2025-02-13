@@ -1,22 +1,23 @@
 import MongoKitten
+import Testing
 import XCTVapor
 
 @testable import App
 
-final class AppTests: XCTestCase {
+struct AppTests {
 
-    class override func setUp() {
+    init() async throws {
         setupTestMongoEnvironmentVariable()
     }
 
-    func testHelloWorld() throws {
-        let app = Application(Environment.testing)
-        defer {
-            app.shutdown()
-        }
+    @Test  func testHelloWorld() async throws {
+        let app: Application = try await Application.make(Environment.testing)
+        // defer {
+            try await app.asyncShutdown()()
+        // }
         try configure(app)
 
-        try app.test(
+        try await app.test(
             .GET,
             "hello",
             afterResponse: { res in

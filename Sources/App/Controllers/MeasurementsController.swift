@@ -19,7 +19,7 @@ struct MeasurementController: RouteCollection {
     func create(req: Request) async throws -> HTTPStatus {
         let kg: Double = req.parameters.get("co2Kg")!
         try await req.application.measurementRepository.create(
-            measurement: CarbonMeasurement(carbonKg: kg)
+            measurement: CarbonMeasurement(kg: kg)
         )
         return HTTPStatus.created
     }

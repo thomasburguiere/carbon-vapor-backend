@@ -1,13 +1,13 @@
 {
-  "originHash" : "99991ba2ad705780581d83fbdb138e5aa9d9ebada87a9ccd610dd0639c671260",
+  "originHash" : "4619b02bf6b50f1e8efe2ded92adaa7b1c278b3db73ee2956b5c9373fe19c64c",
   "pins" : [
     {
       "identity" : "async-http-client",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swift-server/async-http-client.git",
       "state" : {
-        "revision" : "89dc8d0068eb4d3dea050eac6a0c913098c60d97",
-        "version" : "1.25.0"
+        "revision" : "b645ad40822b5c59ac92b758c5c17af054b5b01f",
+        "version" : "1.25.1"
       }
     },
     {
@@ -33,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/thomasburguiere/carbonlog-swift-lib",
       "state" : {
-        "branch" : "master",
-        "revision" : "7e38513f3c1448e1f2959af89559ce8f36dd3561"
+        "revision" : "2071b6fe1ac937ec6f52e60b5fd9e7c699342a77",
+        "version" : "0.3.0"
       }
     },
     {

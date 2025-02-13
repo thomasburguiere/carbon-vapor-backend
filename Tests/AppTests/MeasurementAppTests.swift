@@ -1,9 +1,10 @@
 import MongoKitten
+import Testing
 import XCTVapor
 
 @testable import App
 
-final class MeasurementAppTests: XCTestCase {
+struct MeasurementAppTests {
     static var db: MongoDatabase?
     var collection: MongoCollection?
 
