@@ -1,4 +1,4 @@
-// swift-tools-version:5.6
+// swift-tools-version:6.0
 import PackageDescription
 
 let package = Package(
@@ -8,15 +8,19 @@ let package = Package(
     ],
     dependencies: [
         // 💧 A server-side Swift web framework.
-        .package(url: "https://github.com/vapor/vapor.git", from: "4.97.0"),
-        .package(url: "https://github.com/orlandos-nl/MongoKitten.git", from: "7.6.4"),
-        .package(url: "https://github.com/thomasburguiere/carbonlog-swift-lib", branch: "develop"),
+        .package(url: "https://github.com/vapor/vapor.git", exact: "4.113.0"),
+        // 🔵 Non-blocking, event-driven networking for Swift. Used for custom executors
+        .package(url: "https://github.com/apple/swift-nio.git", exact: "2.81.0"),
+        .package(url: "https://github.com/orlandos-nl/MongoKitten.git", exact: "7.6.4"),
+        .package(url: "https://github.com/thomasburguiere/carbonlog-swift-lib", exact: "0.3.0"),
     ],
     targets: [
         .target(
             name: "App",
             dependencies: [
                 .product(name: "Vapor", package: "vapor"),
+                .product(name: "NIOCore", package: "swift-nio"),
+                .product(name: "NIOPosix", package: "swift-nio"),
                 .product(name: "MongoKitten", package: "MongoKitten"),
                 .product(name: "CarbonLogLib", package: "carbonlog-swift-lib"),
             ],
