@@ -1,29 +1,33 @@
 import MongoKitten
 import Testing
-import XCTVapor
+import VaporTesting
 
 @testable import App
 
 struct AppTests {
-
     init() async throws {
         setupTestMongoEnvironmentVariable()
     }
 
-    @Test  func testHelloWorld() async throws {
-        let app: Application = try await Application.make(Environment.testing)
-        // defer {
-            try await app.asyncShutdown()()
-        // }
-        try configure(app)
+    private func withApp(_ test: (Application) async throws -> Void) async throws {
+        let app = try await Application.make(.testing)
+        do {
+            try await configure(app)
+            try await test(app)
+        } catch {
+            try await app.asyncShutdown()
+            throw error
+        }
+        try await app.asyncShutdown()
+    }
 
-        try await app.test(
-            .GET,
-            "hello",
-            afterResponse: { res in
-                XCTAssertEqual(res.status, .ok)
-                XCTAssertEqual(res.body.string, "Hello, world!")
+    @Test func testHelloWorld() async throws {
+        try await withApp { app in
+            try await app.testing().test(.GET, "hello") { res in
+
+                #expect(res.status == .ok)
+                #expect(res.body.string == "Hello, world!")
             }
-        )
+        }
     }
 }
