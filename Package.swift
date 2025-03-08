@@ -35,7 +35,7 @@ let package = Package(
             name: "AppTests",
             dependencies: [
                 .target(name: "App"),
-                .product(name: "XCTVapor", package: "vapor"),
+            .product(name: "VaporTesting", package: "vapor"),
                 .product(name: "CarbonLogLib", package: "carbonlog-swift-lib"),
             ]
         ),

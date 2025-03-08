@@ -23,5 +23,5 @@ jobs:
       run: swift build
     - name: Print Routes
       run: swift run App routes -e ci
-    # - name: Run tests
-    #   run: swift test -v
+    - name: Run tests
+      run: swift test -v
