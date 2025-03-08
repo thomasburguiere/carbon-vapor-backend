@@ -3,26 +3,20 @@
     {
       "type": "lldb",
       "request": "launch",
-      "sourceLanguages": [
-        "swift"
-      ],
-      "name": "Debug Run",
-      "program": "${workspaceFolder:carbon-vapor-backend}/.build/debug/Run",
       "args": [],
       "cwd": "${workspaceFolder:carbon-vapor-backend}",
-      "preLaunchTask": "swift: Build Debug Run"
+      "name": "Debug App",
+      "program": "${workspaceFolder:carbon-vapor-backend}/.build/debug/App",
+      "preLaunchTask": "swift: Build Debug App"
     },
     {
       "type": "lldb",
       "request": "launch",
-      "sourceLanguages": [
-        "swift"
-      ],
-      "name": "Release Run",
-      "program": "${workspaceFolder:carbon-vapor-backend}/.build/release/Run",
       "args": [],
       "cwd": "${workspaceFolder:carbon-vapor-backend}",
-      "preLaunchTask": "swift: Build Release Run"
+      "name": "Release App",
+      "program": "${workspaceFolder:carbon-vapor-backend}/.build/release/App",
+      "preLaunchTask": "swift: Build Release App"
     }
   ]
 }
