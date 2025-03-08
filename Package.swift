@@ -15,7 +15,7 @@ let package = Package(
         .package(url: "https://github.com/thomasburguiere/carbonlog-swift-lib", exact: "0.3.0"),
     ],
     targets: [
-        .target(
+        .executableTarget(
             name: "App",
             dependencies: [
                 .product(name: "Vapor", package: "vapor"),
@@ -29,14 +29,6 @@ let package = Package(
                 // the `.unsafeFlags` construct required by SwiftPM, this flag is recommended for Release
                 // builds. See <https://github.com/swift-server/guides/blob/main/docs/building.md#building-for-production> for details.
                 .unsafeFlags(["-cross-module-optimization"], .when(configuration: .release))
-            ]
-        ),
-        .executableTarget(
-            name: "Run",
-            dependencies: [
-                .target(name: "App"),
-                .product(name: "MongoKitten", package: "MongoKitten"),
-                .product(name: "CarbonLogLib", package: "carbonlog-swift-lib"),
             ]
         ),
         .testTarget(
