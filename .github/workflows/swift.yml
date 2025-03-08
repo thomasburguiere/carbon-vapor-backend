@@ -20,6 +20,8 @@ jobs:
       with:
         swift-version: "6.0.0"
     - name: Build
-      run: swift build -v
+      run: swift build
+    - name: Print Routes
+      run: swift run App routes -e ci
     - name: Run tests
       run: swift test -v
